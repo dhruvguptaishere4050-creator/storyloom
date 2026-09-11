@@ -1,5 +1,5 @@
-const CACHE = 'storyloom-landing-v1';
-const FILES = ['./', './index.html', './manifest.webmanifest', './favicon.svg'];
+const CACHE = 'storyloom-landing-v2';
+const FILES = ['./', './index.html', './about.html', './privacy.html', './terms.html', './safety.html', './contact.html', './info.css', './manifest.webmanifest', './favicon.svg'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES))));
 self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', event => {
