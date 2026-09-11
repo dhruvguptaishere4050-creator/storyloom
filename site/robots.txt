@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dhruvguptaishere4050-creator.github.io/storyloom/sitemap.xml

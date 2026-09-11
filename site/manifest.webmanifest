@@ -1,0 +1,9 @@
+{
+  "name": "Storyloom",
+  "short_name": "Storyloom",
+  "description": "A free, open-source home for original stories and reader communities.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f5ed",
+  "theme_color": "#17342d"
+}
