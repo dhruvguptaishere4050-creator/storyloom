@@ -1,0 +1,44 @@
+# Storyloom Free Edition — safe local / self-hosted starter configuration.
+# Copy this file to config.ini. Start on your own machine first.
+# Do not expose this directly to the public Internet without HTTPS, backups,
+# regular security updates, and a real human moderation process.
+
+[server]
+bind = 127.0.0.1
+port = 8080
+# The installed application directory. Leave these paths blank when running
+# from the WriteFreely project folder.
+templates_parent_dir =
+static_parent_dir =
+pages_parent_dir =
+keys_parent_dir = keys
+
+[database]
+# SQLite is free and is enough for a small local community. Back up this file.
+type = sqlite3
+filename = storyloom.db
+
+[app]
+site_name = Storyloom
+site_description = A free, open-source home for stories and readers.
+host = http://localhost:8080
+theme = write
+editor = pad
+webfonts = true
+
+# Community defaults: a multi-writer site, but invitation-only at launch.
+# Turn on open_registration only when moderators and reporting workflows exist.
+single_user = false
+open_registration = false
+open_deletion = true
+min_username_len = 3
+max_blogs = 1
+
+# Keep public content inside your own moderated community initially.
+federation = false
+public_stats = false
+private = false
+local_timeline = true
+default_visibility = public
+update_checks = true
+

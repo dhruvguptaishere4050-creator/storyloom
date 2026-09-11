@@ -87,10 +87,11 @@ func defaultPrivacyTitle() sql.NullString {
 }
 
 func defaultAboutPage(cfg *config.Config) string {
-	if cfg.App.Federation {
-		return `_` + cfg.App.SiteName + `_ is an interconnected place for you to write and publish, powered by [WriteFreely](https://writefreely.org) and ActivityPub.`
-	}
-	return `_` + cfg.App.SiteName + `_ is a place for you to write and publish, powered by [WriteFreely](https://writefreely.org).`
+	return `_` + cfg.App.SiteName + `_ is a free, community-run home for original stories, comics, romance, thrillers, fantasy, and every other kind of writing.
+
+Readers can discover work through genres and tags. Writers keep ownership of their work and can export it whenever they choose.
+
+This community is powered by [WriteFreely](https://writefreely.org), free software released under the AGPLv3 license. The person running this instance is responsible for its rules, moderation, backups, and privacy practices.`
 }
 
 func defaultContactPage(app *App) string {
@@ -100,19 +101,19 @@ func defaultContactPage(app *App) string {
 	}
 	return `_` + app.cfg.App.SiteName + `_ is administered by: [**` + c.Alias + `**](/` + c.Alias + `/).
 
-Contact them at this email address: _EMAIL GOES HERE_.
+To report copyright concerns, harassment, unsafe material, or content that may be inappropriate for children, contact the administrator at: _ADD A MODERATION EMAIL ADDRESS HERE_.
 
-You can also reach them here...`
+Do not include private information about anyone in a report. The administrator should acknowledge urgent child-safety reports promptly and follow applicable law.`
 }
 
 func defaultPrivacyPolicy(cfg *config.Config) string {
-	return `[WriteFreely](https://writefreely.org), the software that powers this site, is built to enforce your right to privacy by default.
+	return `This is a starter privacy notice for **` + cfg.App.SiteName + `**. The site administrator must replace it with an accurate policy before inviting the public.
 
-It retains as little data about you as possible, not even requiring an email address to sign up. However, if you _do_ give us your email address, it is stored encrypted in our database. We salt and hash your account's password.
+[WriteFreely](https://writefreely.org), the software that powers this site, is designed to minimize data collection. Accounts may be created without an email address. If an email is provided, it is stored encrypted; passwords are salted and hashed. The service uses cookies to keep people signed in and may retain server logs for security and troubleshooting.
 
-We store log files, or data about what happens on our servers. We also use cookies to keep you logged into your account.
+Story posts, public profiles, and public comments can be visible to other readers. Do not post another person's private information. The administrator must state where data is hosted, how long it is kept, who can access it, how to request deletion, and a contact email.
 
-Beyond this, it's important that you trust whoever runs **` + cfg.App.SiteName + `**. Software can only do so much to protect you -- your level of privacy protections will ultimately fall on the humans that run this particular service.`
+This free edition does not use paid AI or a recommendation tracker by default. Stories are discovered through public genres, tags, and the local timeline. Software cannot replace responsible administration: privacy and safety ultimately depend on the people operating this instance.`
 }
 
 func getLandingBanner(app *App) (*instanceContent, error) {
@@ -148,27 +149,21 @@ func getLandingBody(app *App) (*instanceContent, error) {
 }
 
 func defaultLandingBanner(cfg *config.Config) string {
-	if cfg.App.Federation {
-		return "# Start your blog in the fediverse"
-	}
-	return "# Start your blog"
+	return "# Stories worth sharing"
 }
 
 func defaultLandingBody(cfg *config.Config) string {
-	if cfg.App.Federation {
-		return `## Join the Fediverse
+	return `## Write freely. Read safely.
 
-The fediverse is a large network of platforms that all speak a common language. Imagine if you could reply to Instagram posts from Twitter, or interact with your favorite Medium blogs from Facebook -- federated alternatives like [PixelFed](https://pixelfed.org), [Mastodon](https://joinmastodon.org), and WriteFreely enable you to do these types of things.
+Storyloom is a community for original fiction, comics, serialized writing, and essays. Explore stories through clear genre tags such as **romance**, **thriller**, **comic**, **fantasy**, and **literary**.
 
-<div style="text-align:center">
-	<iframe style="width: 560px; height: 315px; max-width: 100%;" sandbox="allow-same-origin allow-scripts" src="https://video.writeas.org/videos/embed/cc55e615-d204-417c-9575-7b57674cc6f3" frameborder="0" allowfullscreen></iframe>
-</div>
+## A community, not an algorithm
 
-## Write More Socially
+Discovery here is simple and transparent: browse the reader timeline, follow writers you enjoy, and explore tags. We do not use a paid AI service or sell reading history to rank stories.
 
-WriteFreely can communicate with other federated platforms like Mastodon, so people can follow your blogs, bookmark their favorite posts, and boost them to their followers. Sign up above to create a blog and join the fediverse.`
-	}
-	return ""
+## Keep it welcoming
+
+Publish only work you have the right to share. Do not post harassment, private personal information, illegal material, or sexual content involving minors. Mark mature work clearly and keep it out of spaces intended for younger readers. Report concerns to the site administrator.`
 }
 
 func getReaderSection(app *App) (*instanceContent, error) {
@@ -191,9 +186,9 @@ func getReaderSection(app *App) (*instanceContent, error) {
 }
 
 func defaultReaderTitle(cfg *config.Config) sql.NullString {
-	return sql.NullString{String: "Reader", Valid: true}
+	return sql.NullString{String: "Discover stories", Valid: true}
 }
 
 func defaultReaderBanner(cfg *config.Config) string {
-	return "Read the latest posts from " + cfg.App.SiteName + "."
+	return "Read the latest public stories from " + cfg.App.SiteName + ". Browse by genre tags, follow writers you enjoy, and report anything that breaks the community rules."
 }

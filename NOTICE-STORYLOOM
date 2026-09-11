@@ -1,0 +1,12 @@
+Storyloom Free Edition is a modified deployment foundation based on WriteFreely.
+
+Upstream project: https://github.com/writefreely/writefreely
+Upstream copyright: © 2018-2026 Musing Studio LLC and contributing authors.
+Upstream license: GNU Affero General Public License v3.0 (see LICENSE).
+
+Storyloom-specific configuration and documentation are © 2026 Storyloom contributors
+and are released under the GNU Affero General Public License v3.0 or later.
+
+Before making this software available over a network, publish the complete
+corresponding source code of the deployed modified version and offer users a
+clear path to download it, as required by AGPLv3 section 13.
