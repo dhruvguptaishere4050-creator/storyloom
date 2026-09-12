@@ -153,6 +153,7 @@ grant insert, delete on public.comments to authenticated;
 grant select on public.reviews to anon, authenticated;
 grant insert, update, delete on public.reviews to authenticated;
 grant select, insert on public.reports to authenticated;
+grant select on public.user_blocks to anon;
 grant select, insert, delete on public.user_blocks to authenticated;
 
 create policy "Public profiles are readable"
