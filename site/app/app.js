@@ -100,6 +100,9 @@ function friendlyError(error, fallback = 'Something went wrong. Please try again
   if (/already registered|already been registered/i.test(message)) return 'An account with this email already exists. Try signing in.';
   if (/password should be at least/i.test(message)) return 'Use a password with at least 12 characters.';
   if (/rate limit/i.test(message)) return 'Please slow down and try again in a few minutes.';
+  if (/redirect.*(not allowed|not permitted)|redirect_to/i.test(message)) return 'Storyloom must be added in Supabase Authentication → URL Configuration before an account can be created.';
+  if (/signup.*disabled|email.*disabled/i.test(message)) return 'Email sign-up is disabled in Supabase Authentication → Sign In / Providers.';
+  if (/database error saving new user/i.test(message)) return 'The account profile could not be created. Check the Storyloom database setup in Supabase.';
   if (/row-level security|permission denied|not authorized/i.test(message)) return 'You do not have permission to do that.';
   return fallback;
 }
