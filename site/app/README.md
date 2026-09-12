@@ -7,7 +7,7 @@ This folder is the actual reader and publisher web application. It uses a Supaba
 1. Create a project in [Supabase](https://supabase.com/dashboard).
 2. In the SQL Editor, run [`../../supabase/migrations/20260912000000_storyloom_core.sql`](../../supabase/migrations/20260912000000_storyloom_core.sql).
    If you ran the core schema before September 13, 2026, also run [`../../supabase/migrations/20260913000000_fix_anon_block_policy.sql`](../../supabase/migrations/20260913000000_fix_anon_block_policy.sql).
-3. In Authentication, enable Email/Password sign-in. Keep email confirmation enabled for a public project.
+3. In Authentication, enable Email/Password sign-in and keep email confirmation enabled for a public project. In URL Configuration, set both the Site URL and an allowed redirect URL to `https://dhruvguptaishere4050-creator.github.io/storyloom/app/`.
 4. In Project Settings → API, copy the project URL and the **publishable** key (or legacy anon key). Do **not** copy a service-role or secret key.
 5. Put those two public values in `config.js`, commit and push this repository, then wait for the GitHub Pages workflow to finish. The app will be at `https://dhruvguptaishere4050-creator.github.io/storyloom/app/`.
 

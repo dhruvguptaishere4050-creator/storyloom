@@ -564,7 +564,10 @@ async function submitAuth(event) {
     ({ error } = await state.client.auth.signUp({
       email,
       password,
-      options: { data: { display_name: displayName, terms_accepted: 'yes', age_confirmed: 'yes' } }
+      options: {
+        data: { display_name: displayName, terms_accepted: 'yes', age_confirmed: 'yes' },
+        emailRedirectTo: `${window.location.origin}${window.location.pathname}`
+      }
     }));
     if (!error) showNotice('Check your email to confirm your account, then sign in.');
   } else {
