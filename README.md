@@ -2,11 +2,14 @@
 
 **A free, open-source home for original stories, comics, and readers.**
 
+The public website is at [Storyloom](https://dhruvguptaishere4050-creator.github.io/storyloom/). Its real community application—accounts, stories, reader discussion, reviews, reports, author blocking, and moderator controls—is in [`site/app`](site/app). It needs a free Supabase project before it can accept real accounts and posts; follow the exact setup guide in [`site/app/README.md`](site/app/README.md).
+
 Storyloom is a community publishing foundation for fiction, serials, comics, romance, thriller, fantasy, and other writing. It uses tags and a local reader timeline for transparent discovery, so it has no paid AI, recommendation API, or tracking dependency.
 
 ## Included today
 
-- Multi-writer accounts, stories, drafts, Markdown editor, public/private posts, exports, tags, and a reader timeline.
+- A database-backed browser app with email accounts, story submissions, public reading, comments, one review per reader, reports, blocks, author status, and moderation queues.
+- The upstream WriteFreely server remains included for communities that prefer self-hosting their own Go/SQLite publishing service.
 - Storyloom defaults for community rules, a safer invitation-only launch, privacy guidance, and a moderator checklist.
 - A free SQLite configuration for a small community running on its own computer.
 - Dark/light and distraction-free editing modes supplied by the underlying platform.
