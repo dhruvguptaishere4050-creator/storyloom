@@ -61,10 +61,11 @@ create table public.reports (
   reporter_id uuid not null references public.profiles(id) on delete cascade,
   story_id uuid references public.stories(id) on delete set null,
   comment_id uuid references public.comments(id) on delete set null,
+  review_id uuid references public.reviews(id) on delete set null,
   reason text not null check (char_length(reason) between 5 and 1000),
   status text not null default 'new' check (status in ('new', 'reviewing', 'resolved')),
   created_at timestamptz not null default now(),
-  check (story_id is not null or comment_id is not null)
+  check (story_id is not null or comment_id is not null or review_id is not null)
 );
 
 create table public.user_blocks (

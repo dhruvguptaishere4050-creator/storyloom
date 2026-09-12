@@ -280,7 +280,7 @@ function renderStoryDetail(story, comments, reviews) {
     const card = element('article', { className: 'comment' });
     const line = element('div');
     line.append(element('strong', { text: `${authorName(review)} · ★ ${review.rating}` }));
-    if (state.session && state.profile && review.author_id !== state.profile.id) line.append(document.createTextNode(' '), createButton('Report', () => openReport({ storyId: story.id })));
+    if (state.session && state.profile && review.author_id !== state.profile.id) line.append(document.createTextNode(' '), createButton('Report', () => openReport({ storyId: story.id, reviewId: review.id })));
     card.append(line, element('p', { text: review.body || 'No written review.' }));
     reviewSection.append(card);
   }
@@ -469,7 +469,7 @@ async function loadReports() {
   if (!state.profile?.is_admin) return;
   const { data, error } = await state.client
     .from('reports')
-    .select('id,story_id,comment_id,reason,status,created_at,reporter:profiles!reports_reporter_id_fkey(display_name)')
+    .select('id,story_id,comment_id,review_id,reason,status,created_at,reporter:profiles!reports_reporter_id_fkey(display_name),reported_story:stories!reports_story_id_fkey(title),reported_comment:comments!reports_comment_id_fkey(body),reported_review:reviews!reports_review_id_fkey(body,rating)')
     .neq('status', 'resolved')
     .order('created_at', { ascending: true });
   clear(elements.reportsList);
@@ -484,13 +484,22 @@ async function loadReports() {
   for (const report of data) {
     const item = element('article', { className: 'moderation-item' });
     item.append(
-      element('h3', { text: report.story_id ? 'Story report' : 'Comment report' }),
+      element('h3', { text: report.review_id ? 'Review report' : report.comment_id ? 'Comment report' : 'Story report' }),
       element('p', { className: 'status-line', text: `${report.status} · from ${profileName(report.reporter, 'Storyloom member')}` }),
       element('p', { text: report.reason })
     );
+    const targetText = report.reported_review
+      ? `Reported review: ★ ${report.reported_review.rating} · ${report.reported_review.body || 'No written review.'}`
+      : report.reported_comment
+        ? `Reported comment: ${report.reported_comment.body}`
+        : report.reported_story
+          ? `Reported story: ${report.reported_story.title}`
+          : 'Reported content is no longer available.';
+    item.append(element('p', { className: 'muted', text: targetText }));
     const actions = element('div', { className: 'detail-actions' });
     if (report.status === 'new') actions.append(createButton('Mark reviewing', () => updateReport(report.id, 'reviewing')));
     if (report.comment_id) actions.append(createButton('Hide comment', () => hideComment(report.comment_id)));
+    if (report.review_id) actions.append(createButton('Hide review', () => hideReview(report.review_id)));
     if (report.story_id) actions.append(createButton('Lock story', () => moderateStory(report.story_id, 'locked', 'Locked after a community report.')));
     actions.append(createButton('Resolve', () => updateReport(report.id, 'resolved'), 'button'));
     item.append(actions);
@@ -509,6 +518,14 @@ async function hideComment(id) {
   const { error } = await state.client.from('comments').update({ state: 'hidden' }).eq('id', id);
   if (error) return showNotice(friendlyError(error, 'That comment could not be hidden.'), 'error');
   showNotice('Comment hidden from public discussion.');
+  await loadReports();
+  if (state.currentStoryId) await openStory(state.currentStoryId);
+}
+
+async function hideReview(id) {
+  const { error } = await state.client.from('reviews').update({ state: 'hidden' }).eq('id', id);
+  if (error) return showNotice(friendlyError(error, 'That review could not be hidden.'), 'error');
+  showNotice('Review hidden from public discussion.');
   await loadReports();
   if (state.currentStoryId) await openStory(state.currentStoryId);
 }
@@ -594,6 +611,7 @@ function bindEvents() {
       reporter_id: state.profile.id,
       story_id: state.reportTarget.storyId ?? null,
       comment_id: state.reportTarget.commentId ?? null,
+      review_id: state.reportTarget.reviewId ?? null,
       reason
     });
     if (error) return showNotice(friendlyError(error, 'Your report could not be sent.'), 'error');
